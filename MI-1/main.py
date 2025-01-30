@@ -27,13 +27,14 @@ class Relation:
     id: int
     startingNode: Node
     terminalNode: Node 
+    weight: Node
     
     def __init__(self, id, startingNode, terminalNode):
         self.id = id
         self.startingNode = startingNode
         self.terminalNode = terminalNode
-        
-        print(f"relation: {self.id} is created from {self.startingNode.id} to {self.terminalNode.id}")
+        self.weight = random.randint(1, 100)
+        print(f"relation: {self.id} is created from {self.startingNode.id} to {self.terminalNode.id} and its weight is {self.weight}")
             
 
 class Agent:
@@ -71,7 +72,8 @@ class Agent:
     def printState(self):
         for node in self.nodes:
             print(f"node: {node.id}")
-            for relations in 
+            for relation in node.relations:
+                print(f"({relation.id}, {relation.weight})")
     
     
     
@@ -87,3 +89,6 @@ class Agent:
 if __name__ == "__main__":
     agent = Agent()
     agent.run()
+
+
+
