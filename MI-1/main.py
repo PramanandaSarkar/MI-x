@@ -15,9 +15,8 @@ class Node:
         self.terminationTime = terminationTime 
         self.isActive = True
         self.relations = []
-        self.value = random.randint(1,100)
+        self.value = 100
         print(f"node: {self.id} is created at {self.startingTime} and it will terminate at {self.terminationTime} with value {self.value}")
-    
     
     
 
@@ -33,7 +32,7 @@ class Relation:
         self.id = id
         self.startingNode = startingNode
         self.terminalNode = terminalNode
-        self.weight = random.randint(1, 100)
+        self.weight = 50
         print(f"relation: {self.id} is created from {self.startingNode.id} to {self.terminalNode.id} and its weight is {self.weight}")
             
 
@@ -58,7 +57,7 @@ class Agent:
         # created 5 node whose are interconnected
         for _ in range(5):
             terminationTime = random.randint(1,10)
-            node = Node(self.currentId, 0, terminationTime) 
+            node = Node(self.currentId, 0, terminationTime)
             self.currentId += 1
             for anotherNode in self.nodes:
                 relation = Relation(self.currentRelationId, node, anotherNode)
@@ -66,20 +65,38 @@ class Agent:
                 node.relations.append(relation)
             self.nodes.append(node)    
         self.printState()
+        self.modifyState(self.getNode(3),5, 2)
+        self.printState()
+        self.modifyState(self.getNode(3),5, 2)
+        self.printState()
+        self.modifyState(self.getNode(3),5, 2)
+        self.printState()
+        
 
 
 
     def printState(self):
+        print("------------------------------")
         for node in self.nodes:
-            print(f"node: {node.id}")
+            print(f"node: {node.id} :: {node.value}")
             for relation in node.relations:
-                print(f"({relation.id}, {relation.weight})")
+                # print(f"({relation.terminalNode.id}, {relation.weight})", end=" ")
+                pass
+            print()
     
     
     
+    def modifyState(self, node, value, range):
+        if range == 0:
+            return 
+        for relation in  node.relations:
+            
+            nextNode = relation.terminalNode
+            nextNode.value -= value
+            self.modifyState(nextNode, value, range - 1)
     
-    
-    
+    def getNode(self, id: int):
+        return next((node for node in self.nodes if id == node.id), None)    
 
 
 
@@ -89,6 +106,11 @@ class Agent:
 if __name__ == "__main__":
     agent = Agent()
     agent.run()
+
+
+
+
+
 
 
 
