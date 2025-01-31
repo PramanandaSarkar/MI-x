@@ -80,8 +80,8 @@ class Agent:
         for node in self.nodes:
             print(f"node: {node.id} :: {node.value}")
             for relation in node.relations:
-                # print(f"({relation.terminalNode.id}, {relation.weight})", end=" ")
-                pass
+                print(f"({relation.terminalNode.id}, {relation.weight})", end=" ")
+                
             print()
     
     
@@ -90,10 +90,9 @@ class Agent:
         if range == 0:
             return 
         for relation in  node.relations:
-            
             nextNode = relation.terminalNode
             nextNode.value -= value
-            self.modifyState(nextNode, value, range - 1)
+            
     
     def getNode(self, id: int):
         return next((node for node in self.nodes if id == node.id), None)    
